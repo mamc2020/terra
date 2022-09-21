@@ -1,0 +1,19 @@
+---
+ - hosts: localhost
+   tasks:
+   - name: Uncomment Ansible Config (Inventory)
+     replace:
+       path: /etc/ansible/ansible.cfg
+       regexp: '#inventory      = /etc/ansible/hosts'
+       replace: 'inventory      = /etc/ansible/hosts'
+     register: info
+   - name: Check
+     debug: var=info
+   - name: Add hosts
+     lineinfile:
+       path: /etc/ansible/hosts
+       insertafter: "# Ex 2: A collection of hosts belonging to the 'webservers' group"
+       line: "{{ item }}"
+     with_items:
+     - '10.0.1.51'
+     - '[web]'
