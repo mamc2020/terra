@@ -1,0 +1,13 @@
+---
+ - hosts: localhost
+   tasks:
+   - name: OpenSSH
+     openssh_keypair:
+         path: /tmp/id_ssh_rsa
+         size: 2048
+   - name: SSH Transfer
+     shell: sshpass -p admin ssh-copy-id -o StrictHostKeyChecking=no root@172.31.3.177
+     register: value
+   - name: Check
+     debug: var=value
+
